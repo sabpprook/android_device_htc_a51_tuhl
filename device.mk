@@ -25,4 +25,3 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/htc/a51tuhl/recovery/kernel:kernel \
     bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
-

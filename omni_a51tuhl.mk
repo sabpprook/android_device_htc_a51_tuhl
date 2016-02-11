@@ -1,4 +1,4 @@
-## Specify phone tech before including full_phone
+# Specify phone tech before including full_phone
 $(call inherit-product, vendor/omni/config/cdma.mk)
 
 # Inherit device configuration
@@ -13,5 +13,5 @@ $(call inherit-product, vendor/omni/config/common.mk)
 PRODUCT_DEVICE := a51tuhl
 PRODUCT_NAME := omni_a51tuhl
 PRODUCT_BRAND := htc
-PRODUCT_MANUFACTURER := htc
+PRODUCT_MANUFACTURER := HTC
 PRODUCT_MODEL := HTC_D820f
