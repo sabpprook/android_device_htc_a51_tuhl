@@ -1,0 +1,2 @@
+add_lunch_combo omni_a51tuhl-userdebug
+add_lunch_combo omni_a51tuhl-eng
