@@ -1,41 +1,23 @@
 on init
     insmod /system/lib/modules/texfat.ko
-
-on offmode_charging
-    start detect_key
-    start offmode_charging
+    wait /dev/block/platform/soc.0/7824900.sdhci
+    symlink /dev/block/platform/soc.0/7824900.sdhci /dev/block/bootdevice
 
 on boot
-    write /sys/devices/platform/android_usb/usb_function_switch 130
     start choice_fn
     start chargeled
 
-on property:sys.usb.config=none
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/bDeviceClass 0
-
-on property:sys.usb.config=mtp,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    write /sys/devices/platform/android_usb/usb_function_switch 130
-    setprop sys.usb.state ${sys.usb.config}
-
-on property:sys.usb.config=adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    write /sys/devices/platform/android_usb/usb_function_switch 3
-    setprop sys.usb.state ${sys.usb.config}
-
-on property:ro.bootmode=offmode_charging
-    stop recovery
+on fs
+    start is_charging
 
 service chargeled /sbin/chargeled
     disabled
     seclabel u:r:healthd:s0
+
+service is_charging /sbin/is_charging.sh
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
 
 service choice_fn /sbin/choice_fn
     oneshot
@@ -53,4 +35,3 @@ service offmode_charging /sbin/offmode_charging
 service power_test /sbin/power_test
     disabled
     oneshot
-    seclabel u:r:recovery:s0
